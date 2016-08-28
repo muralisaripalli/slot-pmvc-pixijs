@@ -32,7 +32,7 @@ puremvc.define(
                 [[30,30],[365,365],[700,30]],
                 [[30,420],[365,85],[700,420]],
             ],
-        winAnnounceDelay: 1.5,
+        winAnnounceDelay: 2,
         repeatWins: 2,
         responsiveScale:
         {
@@ -93,6 +93,7 @@ puremvc.define(
 
         reelAreaBGColor: 0xFFFFFF,
         reelBGColor: 0x2B6F1A,
+        reelHighlightColor: 0x006433,
 
         winLineWidth: 5,
         winLineColor: 0xA81C1D

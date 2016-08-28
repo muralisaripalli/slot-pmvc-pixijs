@@ -2,11 +2,11 @@
  * Slot game demo - Pure MVC, Pixi.js v4
  * @author      Murali Saripalli
  * @desc
- * @class       SpinCommand
+ * @class       AssetsLoadedCommand
  */
 puremvc.define(
     {
-        name: 'slot.controller.command.SpinCommand',
+        name: 'slot.controller.command.AssetsLoadedCommand',
         parent: puremvc.SimpleCommand
     },
 
@@ -14,9 +14,7 @@ puremvc.define(
     {
         execute: function (note) {
             var server = this.facade.retrieveProxy(slot.model.proxy.ServerProxy.NAME);
-            this.sendNotification(slot.AppConstants.STOP_WIN_ANNOUNCEMENTS);
-
-            server.spin(note.getBody());
+            server.init();
         }
     }
 );

@@ -32,6 +32,8 @@ puremvc.define(
         resultReel: null,
         isResultReceived: null,
 
+        highlight: null,
+
         init: function (index, data) {
             this.reelIndex = index;
             this.numRows = data.gameConfigVO.numRows;
@@ -230,6 +232,18 @@ puremvc.define(
         updateSymbolsWithoutSpin: function(result){
             for(var i = 0; i < this.numRows; i++){
                 this.cells[i].updateSymbol(result[i]);
+            }
+        },
+
+        showWinHighlight: function(row){
+            this.hideWinHighlight();
+            this.highlight = this.cells[row].highlight;
+            this.highlight.visible = true;
+        },
+
+        hideWinHighlight: function(){
+            if(this.highlight){
+                this.highlight.visible = false;
             }
         },
 

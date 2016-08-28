@@ -1,15 +1,16 @@
 Feature/Imp tasks
 =============
-- Sounds
-- Total bet/bet per line
-- Deduct balance & Insufficient balance
-- Info area, line win amounts in info area
 - Load from spritesheets
 - Add comments
 - Preloader
 - Load multiple resolutions
+- Info area, line win amounts in info area
 - Paytable
 
+* Total bet/bet per line
+* Deduct balance & Insufficient balance
+
+* Sounds
 * Text boxes alignment
 * Hide address bar
 * Server implementation
@@ -17,11 +18,10 @@ Feature/Imp tasks
 * Responsive resizing
 * Spin
 
+
 Improvement tasks
 =================
 - LoaderVO and LoaderProxy extension
-- Rollovers for buttons
-- Highlight symbols during win line announcements
 - All asset URLs and identifiers from config file
 - Load game config from config file
 - Position of text field is set by hardcoded position values, think about it
@@ -32,15 +32,18 @@ Improvement tasks
 - Aliases for full package name for ease of use
 - destroy method for views
 - Win and balance ticker
+- Rollovers for buttons
 
+* Highlight symbols during win line announcements
 * Panel button colors
 * Display numbers with decimals
+
 
 Final tasks
 ===========
 - code width
 - Include all minified files
 - Include responsive scale ratios diagram
-- Test onn devices
+- Test on devices
 - JSDocs
 - Readme.md

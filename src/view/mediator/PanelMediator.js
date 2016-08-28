@@ -22,7 +22,8 @@ puremvc.define(
             return [
                 slot.AppConstants.WINDOW_RESIZED,
                 slot.AppConstants.ASSETS_LOADED,
-                slot.AppConstants.SPIN_END
+                slot.AppConstants.SPIN_END,
+                slot.AppConstants.SERVER_INIT
             ];
         },
 
@@ -42,8 +43,9 @@ puremvc.define(
             this.serverProxy = this.facade.retrieveProxy(slot.model.proxy.ServerProxy.NAME);
         },
 
-        onSpinClick: function(){
-            this.sendNotification(slot.AppConstants.SPIN);
+        onSpinClick: function(betAmount){
+            this.viewComponent.updateBalance(this.serverProxy.resultVO.balance - betAmount);
+            this.sendNotification(slot.AppConstants.SPIN, betAmount);
         },
 
         onBetUpdate: function(){
@@ -65,6 +67,10 @@ puremvc.define(
                             windowSizeVO: this.windowSizeProxy.windowSizeVO
                         }
                     );
+                    break;
+                case slot.AppConstants.SERVER_INIT:
+                    this.viewComponent.enableBet();
+                    this.viewComponent.enableSpin();
                     this.viewComponent.updateBalance(this.serverProxy.resultVO.balance);
                     break;
                 case slot.AppConstants.SPIN_END:

@@ -30,6 +30,7 @@ puremvc.define(
         btnBetPlus: null,
         btnBetMinus: null,
         txtBet: null,
+        betAmount: null,
 
         currency: null,
         denominations: null,
@@ -116,6 +117,8 @@ puremvc.define(
             this.btnBetMinus.on(slot.view.event.ViewEvents.CLICK, this.onBetMinusClick.bind(this));
             this.btnBetPlus.interactive = true;
             this.btnBetPlus.on(slot.view.event.ViewEvents.CLICK, this.onBetPlusClick.bind(this));
+            this.disableBet();
+            this.disableSpin();
 
             // Initial values
             this.updateBet();
@@ -158,6 +161,7 @@ puremvc.define(
 
         updateBet: function(){
             this.txtBet.text = this.currency + this.denominations[this.currentDenomination].toFixed(2);
+            this.betAmount = this.denominations[this.currentDenomination];
         },
 
         increaseBet: function(){
@@ -227,7 +231,7 @@ puremvc.define(
             this.disableSpin();
             this.disableBet();
             this.txtWin.text = "";
-            this.stage.emit(slot.view.event.ViewEvents.SPIN_CLICK);
+            this.stage.emit(slot.view.event.ViewEvents.SPIN_CLICK, this.betAmount);
         },
 
         onBetMinusClick: function(evt){

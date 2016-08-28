@@ -17,9 +17,24 @@ puremvc.define(
         callback: null,
         gameConfigVO: null,
         betAmount: null,
+        balance: null,
 
-        loadSpinResult: function (callback) {
-            this.betAmount = 1;
+        init: function (callback) {
+            this.betAmount = 0;
+            this.deposit();
+            this.callback = callback;
+            setTimeout(this.sendSpinResult.bind(this), 500);
+        },
+        deposit: function(){
+            this.balance = (Math.random() * 500) + 500;
+        },
+
+        loadSpinResult: function (betAmount, callback) {
+            this.betAmount = betAmount;
+            this.balance -= this.betAmount;
+            if(this.balance < this.gameConfigVO.denominations[this.gameConfigVO.denominations.length - 1]){
+                this.deposit();
+            }
             this.callback = callback;
             setTimeout(this.sendSpinResult.bind(this), 1000);
         },
@@ -45,12 +60,14 @@ puremvc.define(
             var wins = this.getWins(lineSymbols);
 
             result.matrix = reelMatrix;
-            result.balance = 1000;
             result.numWins = wins.length;
             result.totalWin = wins.reduce(function(pv, cv){
                 return pv + cv.winAmount;
             }, 0);
             result.wins = wins;
+
+            this.balance += result.totalWin;
+            result.balance = this.balance;
 
             return result;
         },
@@ -102,10 +119,10 @@ puremvc.define(
         },
 
         forceResult: function(matrix){
-            //return matrix;
+            return matrix;
             matrix = [[1,2,3],[1,2,3],[1,2,3],[1,2,3],[1,2,3]];
             matrix = [[4,5,6],[4,5,6],[4,5,6],[4,5,6],[4,5,6]];
-            matrix = [[7,8,1],[7,8,2],[7,8,3],[7,8,4],[7,8,5]];
+            //matrix = [[7,8,1],[7,8,2],[7,8,3],[7,8,4],[7,8,5]];
             return matrix;
         }
 

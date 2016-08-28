@@ -22,6 +22,7 @@ puremvc.define(
         // ===
         ASSETS_LOADED:              "AppConstants_assets_loaded",
         WINDOW_RESIZED:             "AppConstants_window_resized",
+        SERVER_INIT:                "AppConstants_server_init",
         SPIN:                       "AppConstants_spin",
         SPIN_RESULT:                "AppConstants_spin_result",
         SPIN_END:                   "AppConstants_spin_end",

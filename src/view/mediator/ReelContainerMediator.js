@@ -28,7 +28,8 @@ puremvc.define(
                 slot.AppConstants.SPIN,
                 slot.AppConstants.SPIN_RESULT,
                 slot.AppConstants.WIN_ANNOUNCEMENT,
-                slot.AppConstants.CLEAR_WIN_ANNOUNCEMENT
+                slot.AppConstants.CLEAR_WIN_ANNOUNCEMENT,
+                slot.AppConstants.SERVER_INIT
             ];
         },
 
@@ -64,9 +65,11 @@ puremvc.define(
                         windowSizeVO: this.windowSizeProxy.windowSizeVO
                     };
                     this.viewComponent.init(data);
-                    this.viewComponent.updateSymbolsWithoutSpin(this.serverProxy.resultVO.getSymbolMatrix());
                     this.winLinesView.init(data);
                     this.viewComponent.stage.addChild(this.winLinesView.stage);
+                    break;
+                case slot.AppConstants.SERVER_INIT:
+                    this.viewComponent.updateSymbolsWithoutSpin(this.serverProxy.resultVO.getSymbolMatrix());
                     break;
                 case slot.AppConstants.SPIN:
                     this.viewComponent.spin();
@@ -76,9 +79,14 @@ puremvc.define(
                     break;
                 case slot.AppConstants.WIN_ANNOUNCEMENT:
                     this.winLinesView.showLine(note.getBody().win.lineNumber);
+                    this.viewComponent.showWinHighlight(
+                        this.configProxy.gameConfigVO.lines[note.getBody().win.lineNumber],
+                        note.getBody().win.oak
+                    );
                     break;
                 case slot.AppConstants.CLEAR_WIN_ANNOUNCEMENT:
                     this.winLinesView.hideAllLines();
+                    this.viewComponent.hideWinHighlight();
                     break;
             }
         }

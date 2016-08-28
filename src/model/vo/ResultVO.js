@@ -19,7 +19,7 @@ puremvc.define(
                 [3,7,6],
                 [2,6,5]
             ],
-        balance: 1000,
+        balance: 0,
         totalWin: 0,
         numWins: 0,
         wins: null,

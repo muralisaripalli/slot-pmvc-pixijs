@@ -24,8 +24,17 @@ puremvc.define(
             this.server = new slot.model.proxy.service.ServerService();
         },
 
-        spin: function() {
-            this.server.loadSpinResult(this.onResult.bind(this));
+        init: function(){
+            this.server.init(this.onServerInit.bind(this));
+        },
+
+        spin: function(betAmount) {
+            this.server.loadSpinResult(betAmount, this.onResult.bind(this));
+        },
+
+        onServerInit: function(result){
+            this.resultVO.update(result);
+            this.sendNotification(slot.AppConstants.SERVER_INIT, this.resultVO);
         },
 
         onResult: function(result){

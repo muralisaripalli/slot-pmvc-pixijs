@@ -14,6 +14,7 @@ puremvc.define(
     {
         // Register all commands
         execute: function (note) {   
+            this.facade.registerCommand(slot.AppConstants.ASSETS_LOADED, slot.controller.command.AssetsLoadedCommand);
             this.facade.registerCommand(slot.AppConstants.WINDOW_RESIZED, slot.controller.command.WindowResizeCommand);
             this.facade.registerCommand(slot.AppConstants.SPIN, slot.controller.command.SpinCommand);
             this.facade.registerCommand(slot.AppConstants.SPIN_END, slot.controller.command.SpinEndCommand);

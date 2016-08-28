@@ -17,6 +17,7 @@ puremvc.define(
         // Stage Members
         stage: null,
         symbol: null,
+        highlight: null,
 
         symbolID: null,
         resources: null,
@@ -30,6 +31,13 @@ puremvc.define(
             this.numSymbols = data.gameConfigVO.numSymbols;
             this.symbols = data.gameConfigVO.getSymbols();
 
+            // Yellow rounded rectangle strip behind each reel
+            this.highlight = new PIXI.Graphics();
+            this.highlight.beginFill(data.uiConfigVO.reelHighlightColor);
+            this.highlight.drawRoundedRect(0, 0, data.uiConfigVO.symbolWidth, data.uiConfigVO.symbolHeight, 10);
+            this.highlight.alpha = 0.7;
+            this.stage.addChild(this.highlight);
+            this.highlight.visible = false;
         },
 
         updateSymbol: function(symbolID){

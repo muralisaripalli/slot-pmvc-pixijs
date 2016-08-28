@@ -47,7 +47,6 @@ puremvc.define(
                 case slot.AppConstants.WIN_ANNOUNCEMENT:
                     if(!note.getBody().isRepeating) {
                         var winSymbol = note.getBody().win.symbol;
-                        console.log("winSymbol: " + winSymbol);
                         if (this.configProxy.gameConfigVO.isRoyalSymbol(winSymbol)) {
                             this.sound.play("win_royal");
                         } else {

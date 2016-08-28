@@ -176,6 +176,18 @@ puremvc.define(
             }
         },
 
+        showWinHighlight: function(line, oak){
+            for(var i = 0; i < oak; i++){
+                this.reels[i].showWinHighlight(line[i]);
+            }
+        },
+
+        hideWinHighlight: function(){
+            for(var i = 0; i < this.numReels; i++){
+                this.reels[i].hideWinHighlight();
+            }
+        },
+
         onReelStop: function(reelID){
             if(reelID === this.numReels - 1){
                 this.isSpinning = false;
