@@ -119,7 +119,7 @@ puremvc.define(
         },
 
         forceResult: function(matrix){
-            return matrix;
+            //return matrix;
             matrix = [[1,2,3],[1,2,3],[1,2,3],[1,2,3],[1,2,3]];
             matrix = [[4,5,6],[4,5,6],[4,5,6],[4,5,6],[4,5,6]];
             //matrix = [[7,8,1],[7,8,2],[7,8,3],[7,8,4],[7,8,5]];

@@ -36,12 +36,7 @@ puremvc.define(
                     this.viewComponent.handleResize(note.getBody());
                     break;
                 case slot.AppConstants.ASSETS_LOADED:
-                    this.viewComponent.init(
-                        {
-                            resources: note.getBody().resources,
-                            windowSizeVO: this.windowSizeProxy.windowSizeVO
-                        }
-                    );
+                    this.viewComponent.init(this.windowSizeProxy.windowSizeVO);
                     break;
             }
         }

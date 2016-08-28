@@ -59,7 +59,6 @@ puremvc.define(
                     break;
                 case slot.AppConstants.ASSETS_LOADED:
                     var data = {
-                        resources: note.getBody().resources,
                         gameConfigVO: this.configProxy.gameConfigVO,
                         uiConfigVO: this.configProxy.uiConfigVO,
                         windowSizeVO: this.windowSizeProxy.windowSizeVO

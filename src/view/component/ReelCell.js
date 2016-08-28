@@ -20,14 +20,12 @@ puremvc.define(
         highlight: null,
 
         symbolID: null,
-        resources: null,
 
         // All possible symbols
         numSymbols: null,
         symbols: null,
 
         init: function (data) {
-            this.resources = data.resources;
             this.numSymbols = data.gameConfigVO.numSymbols;
             this.symbols = data.gameConfigVO.getSymbols();
 
@@ -43,7 +41,7 @@ puremvc.define(
         updateSymbol: function(symbolID){
             this.symbolID = symbolID;
             this.removeSymbol();
-            this.symbol = new PIXI.Sprite(this.resources[symbolID].texture);
+            this.symbol = new PIXI.Sprite(PIXI.Texture.fromFrame(symbolID));
             this.stage.addChild(this.symbol);
         },
 

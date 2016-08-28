@@ -21,15 +21,15 @@ puremvc.define(
         // References
         ORIENTATION: slot.model.enum.ORIENTATION,
 
-        init: function(data){
-            this.addChildren(data.resources);
-            this.setupView(data.windowSizeVO);
+        init: function(windowSizeVO){
+            this.addChildren();
+            this.setupView(windowSizeVO);
 
             PXRoot.addChild(this.stage);
         },
 
-        addChildren: function(resources){
-            this.bg = new PIXI.Sprite(resources.bg.texture);
+        addChildren: function(){
+            this.bg = new PIXI.Sprite(PIXI.Texture.fromFrame("bg"));
             this.bg.anchor.set(0.5,0.5);
             this.stage.addChild(this.bg);
         },

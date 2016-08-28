@@ -36,7 +36,7 @@ puremvc.define(
         handleNotification: function (note) {
             switch ( note.getName() ) {
                 case slot.AppConstants.ASSETS_LOADED:
-                    this.sound = note.getBody().sound;
+                    this.sound = note.getBody();
                     break;
                 case slot.AppConstants.BET_UPDATED:
                     this.sound.play("bet");

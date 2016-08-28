@@ -45,22 +45,22 @@ puremvc.define(
             this.denominations = data.gameConfigVO.denominations;
             this.currentDenomination = data.gameConfigVO.defaultDenomination;
 
-            this.addChildren(data.resources);
+            this.addChildren();
             this.setupView(data.windowSizeVO);
 
             PXRoot.addChild(this.stage);
         },
 
-        addChildren: function(resources){
+        addChildren: function(){
             // Spin component
             this.spin = new PIXI.Container();
-            this.spin.addChild(new PIXI.Sprite(resources.spin_disabled.texture));
-            this.spin.addChild(this.btnSpin = new PIXI.Sprite(resources.spin.texture));
+            this.spin.addChild(new PIXI.Sprite(PIXI.Texture.fromFrame("spin_disabled")));
+            this.spin.addChild(this.btnSpin = new PIXI.Sprite(PIXI.Texture.fromFrame("spin")));
             this.stage.addChild(this.spin);
 
             // Win component ==>
             this.win = new PIXI.Container();
-            this.win.addChild(new PIXI.Sprite(resources.win.texture));
+            this.win.addChild(new PIXI.Sprite(PIXI.Texture.fromFrame("win")));
 
             this.txtWin = new PIXI.Text();
             this.txtWin.style = {fontSize: 30, align: 'center'};
@@ -75,7 +75,7 @@ puremvc.define(
 
             // Balance component ==>
             this.balance = new PIXI.Container();
-            this.balance.addChild(new PIXI.Sprite(resources.balance.texture));
+            this.balance.addChild(new PIXI.Sprite(PIXI.Texture.fromFrame("balance")));
 
             this.txtBalance = new PIXI.Text();
             this.txtBalance.style = {fontSize: 30, align: 'center'};
@@ -89,15 +89,15 @@ puremvc.define(
 
             // Bet component ===>
             this.bet = new PIXI.Container();
-            this.bet.addChild(new PIXI.Sprite(resources.bet_minus_disabled.texture));
-            this.bet.addChild(this.btnBetMinus = new PIXI.Sprite(resources.bet_minus.texture));
-            var betSprite = new PIXI.Sprite(resources.bet.texture);
+            this.bet.addChild(new PIXI.Sprite(PIXI.Texture.fromFrame("bet_minus_disabled")));
+            this.bet.addChild(this.btnBetMinus = new PIXI.Sprite(PIXI.Texture.fromFrame("bet_minus")));
+            var betSprite = new PIXI.Sprite(PIXI.Texture.fromFrame("bet"));
             betSprite.x += this.btnBetMinus.width + 2;
             this.bet.addChild(betSprite);
-            var betPlusDSprite = new PIXI.Sprite(resources.bet_plus_disabled.texture);
+            var betPlusDSprite = new PIXI.Sprite(PIXI.Texture.fromFrame("bet_plus_disabled"));
             betPlusDSprite.x = betSprite.x + betSprite.width + 2;
             this.bet.addChild(betPlusDSprite);
-            this.bet.addChild(this.btnBetPlus = new PIXI.Sprite(resources.bet_plus.texture));
+            this.bet.addChild(this.btnBetPlus = new PIXI.Sprite(PIXI.Texture.fromFrame("bet_plus")));
             this.btnBetPlus.x = betPlusDSprite.x;
 
             this.txtBet = new PIXI.Text();

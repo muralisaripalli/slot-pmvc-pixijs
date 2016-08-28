@@ -33,7 +33,7 @@ puremvc.define(
                 [[30,420],[365,85],[700,420]],
             ],
         winAnnounceDelay: 2,
-        repeatWins: 2,
+        repeatWins: 10,
         responsiveScale:
         {
             win:
