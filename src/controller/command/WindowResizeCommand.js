@@ -14,6 +14,7 @@ puremvc.define(
     {
         execute: function (note) {
             var windowSizeVO = note.getBody();
+            console.log(windowSizeVO);
             PXRenderer.resize(windowSizeVO.width, windowSizeVO.height);
         }
     }

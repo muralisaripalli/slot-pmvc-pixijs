@@ -19,13 +19,12 @@ puremvc.define(
                 [3,7,6],
                 [2,6,5]
             ],
-        balance: 997.568,
+        balance: 1000,
         totalWin: 0,
         numWins: 0,
         wins: null,
 
         update: function(result){
-            console.log("Result: ");
             console.log(result);
             this.matrix = result.matrix;
             this.balance = result.balance;

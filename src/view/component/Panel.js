@@ -62,9 +62,11 @@ puremvc.define(
             this.win.addChild(new PIXI.Sprite(resources.win.texture));
 
             this.txtWin = new PIXI.Text();
-            this.txtWin.style = {fontSize: 24, align: 'center'};
-            this.txtWin.x = 12;
-            this.txtWin.y = 42;
+            this.txtWin.style = {fontSize: 30, align: 'center'};
+            this.txtWin.anchor.set(0.5, 0.5);
+            this.txtWin.x = 100;
+            this.txtWin.y = 52;
+
             this.win.addChild(this.txtWin);
 
             this.stage.addChild(this.win);
@@ -75,9 +77,10 @@ puremvc.define(
             this.balance.addChild(new PIXI.Sprite(resources.balance.texture));
 
             this.txtBalance = new PIXI.Text();
-            this.txtBalance.style = {fontSize: 24, align: 'center'};
-            this.txtBalance.x = 12;
-            this.txtBalance.y = 42;
+            this.txtBalance.style = {fontSize: 30, align: 'center'};
+            this.txtBalance.anchor.set(0.5, 0.5);
+            this.txtBalance.x = 100;
+            this.txtBalance.y = 52;
             this.balance.addChild(this.txtBalance);
 
             this.stage.addChild(this.balance);
@@ -97,9 +100,10 @@ puremvc.define(
             this.btnBetPlus.x = betPlusDSprite.x;
 
             this.txtBet = new PIXI.Text();
-            this.txtBet.style = {fontSize: 24, align: 'center'};
-            this.txtBet.x = betSprite.x + 7;
-            this.txtBet.y = betSprite.y + 40;
+            this.txtBet.style = {fontSize: 30, align: 'center'};
+            this.txtBet.anchor.set(0.5, 0.5);
+            this.txtBet.x = betSprite.x + 68;
+            this.txtBet.y = betSprite.y + 52;
             this.bet.addChild(this.txtBet);
 
             this.stage.addChild(this.bet);
@@ -107,14 +111,18 @@ puremvc.define(
 
             // Buttons
             this.btnSpin.interactive = true;
-            this.btnSpin.on("click", this.onSpinClick.bind(this));
+            this.btnSpin.on(slot.view.event.ViewEvents.CLICK, this.onSpinClick.bind(this));
             this.btnBetMinus.interactive = true;
-            this.btnBetMinus.on("click", this.onBetMinusClick.bind(this));
+            this.btnBetMinus.on(slot.view.event.ViewEvents.CLICK, this.onBetMinusClick.bind(this));
             this.btnBetPlus.interactive = true;
-            this.btnBetPlus.on("click", this.onBetPlusClick.bind(this));
+            this.btnBetPlus.on(slot.view.event.ViewEvents.CLICK, this.onBetPlusClick.bind(this));
 
             // Initial values
             this.updateBet();
+
+            this.resTxt = new PIXI.Text();
+            this.resTxt.style = {fontSize: 15, align: 'left', wordwrap: true,stroke:0xFFFFFF,strokeThickness:2};
+            PXRoot.addChild(this.resTxt);
         },
 
         setupView: function(windowSizeVO){
@@ -137,6 +145,7 @@ puremvc.define(
                     }
                 );
             }
+            this.resTxt.text = windowSizeVO.width + "x" + windowSizeVO.height +"\n";
         },
 
         updateBalance: function(balance){
@@ -217,6 +226,7 @@ puremvc.define(
         onSpinClick: function(evt){
             this.disableSpin();
             this.disableBet();
+            this.txtWin.text = "";
             this.stage.emit(slot.view.event.ViewEvents.SPIN_CLICK);
         },
 

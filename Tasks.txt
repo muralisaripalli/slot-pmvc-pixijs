@@ -1,18 +1,19 @@
 Feature/Imp tasks
 =============
-- Mouse touch and click events
 - Sounds
-- Game functionality
-- Load from spritesheets
-- Deduct balance & Insufficient balance
 - Total bet/bet per line
-- Add comments
-- Server implementation
-- Preloader
+- Deduct balance & Insufficient balance
 - Info area, line win amounts in info area
-- Hide address bar
-- Text boxes alignment
+- Load from spritesheets
+- Add comments
+- Preloader
+- Load multiple resolutions
+- Paytable
 
+* Text boxes alignment
+* Hide address bar
+* Server implementation
+* Mouse touch and click events
 * Responsive resizing
 * Spin
 
@@ -30,6 +31,7 @@ Improvement tasks
 - Categorize constants in AppConstants and ViewEvents
 - Aliases for full package name for ease of use
 - destroy method for views
+- Win and balance ticker
 
 * Panel button colors
 * Display numbers with decimals

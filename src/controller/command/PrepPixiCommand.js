@@ -18,7 +18,10 @@ puremvc.define(
             PXRenderer = new PIXI.autoDetectRenderer(window.innerWidth, window.innerHeight);
             PXRenderer.view.style.display = "block";
 
-            document.body.appendChild(PXRenderer.view);
+            PXRoot.interactive = true;
+            PXRoot.on("tap",this.setFullScreen);
+
+            document.getElementById("game").appendChild(PXRenderer.view);
 
             // Render loop
             window.renderLoop = function(){
@@ -26,6 +29,12 @@ puremvc.define(
                 requestAnimationFrame(window.renderLoop);
             };
             window.renderLoop();
+        },
+
+        setFullScreen: function(){
+            if (screenfull.enabled && !screenfull.isFullscreen) {
+                screenfull.request();
+            }
         }
 
     }

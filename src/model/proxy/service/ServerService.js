@@ -6,105 +6,98 @@
  */
 puremvc.define(
     {
-        name: 'slot.model.proxy.service.ServerService'
+        name: 'slot.model.proxy.service.ServerService',
+        constructor: function(){
+            this.gameConfigVO = new slot.model.vo.GameConfigVO();
+        }
     },
 
     // INSTANCE MEMBERS
     {
         callback: null,
+        gameConfigVO: null,
+        betAmount: null,
 
         loadSpinResult: function (callback) {
+            this.betAmount = 1;
             this.callback = callback;
             setTimeout(this.sendSpinResult.bind(this), 1000);
         },
 
         sendSpinResult: function(){
-            var result = {};
+            this.callback(this.calculateSpinResult());
+        },
 
-            result.matrix =
-                [
-                    [
-                        this.rSymbol(),
-                        this.rSymbol(),
-                        this.rSymbol()
-                    ],
-                    [
-                        this.rSymbol(),
-                        this.rSymbol(),
-                        this.rSymbol()
-                    ],
-                    [
-                        this.rSymbol(),
-                        this.rSymbol(),
-                        this.rSymbol()
-                    ],
-                    [
-                        this.rSymbol(),
-                        this.rSymbol(),
-                        this.rSymbol()
-                    ],
-                    [
-                        this.rSymbol(),
-                        this.rSymbol(),
-                        this.rSymbol()
-                    ]
-                ];
-            result.balance = Math.random() * 1000;
-            result.totalWin = Math.random() * 100;
-
-            var ar = [0,1,2,3,4];
-            this.shuffle(ar);
-
-            result.numWins = Math.ceil(Math.random() * 5);
-            result.wins =[];
-            for(var i= 0;i<result.numWins;i++){
-                result.wins.push(
-                    {
-                        lineNumber: ar[i],
-                        lineWin: Math.random() * 100,
-                        winningCells: this.createWinningCellsArray()
-                    }
-                );
-            }
-            result.wins.sort(function(a, b) {
-                if (a.lineNumber < b.lineNumber) {
-                    return -1;
-                } else {
-                    return 1;
+        calculateSpinResult: function(){
+            var result = [];
+            var reels = this.gameConfigVO.reels;
+            var reelMatrix = [];
+            for (var i=0; i<this.gameConfigVO.numReels; i++) {
+                var reelStopPos = Math.floor(Math.random() * reels[i].length);
+                reelMatrix[i] = [];
+                for(var j = 0; j < this.gameConfigVO.numRows; j++){
+                    reelMatrix[i][j] = this.getSymbolAt(reels[i], reelStopPos + j);
                 }
-            });
-            this.callback(result);
+            }
+            var lineSymbols = this.getLineStrings(reelMatrix);
+
+            var wins = this.getWins(lineSymbols);
+
+            result.matrix = reelMatrix;
+            result.balance = 1000;
+            result.numWins = wins.length;
+            result.totalWin = wins.reduce(function(pv, cv){
+                return pv + cv.winAmount;
+            }, 0);
+            result.wins = wins;
+
+            return result;
         },
 
-        shuffle: function(a) {
-            var j, x, i;
-            for (i = a.length; i; i--) {
-                j = Math.floor(Math.random() * i);
-                x = a[i - 1];
-                a[i - 1] = a[j];
-                a[j] = x;
+        getSymbolAt: function(reel, pos){
+            if(pos > reel.length - 1){
+                return reel[pos - reel.length];
+            }else{
+                return reel[pos];
             }
         },
 
-        createWinningCellsArray: function () {
-            var ar = [];
-            var n = Math.ceil(Math.random() * 3) + 2;
-            for(var i = 0;i<n;i++){
-                ar.push(1);
+        getLineStrings: function(matrix){
+            var lines = this.gameConfigVO.lines;
+            var lineSymbols = [];
+            for(var i = 0; i < this.gameConfigVO.numLines; i++){
+                lineSymbols[i] = [];
+                for(var j = 0; j < this.gameConfigVO.numReels; j++){
+                    lineSymbols[i][j] = matrix[j][lines[i][j]];
+                }
             }
-            return ar;
+            return lineSymbols;
         },
 
-        sampleWins:
-            [
-                {lineNumber: 0, winAmount: Math.random() * 100, winningCells: [1,1,1]},
-                {lineNumber: 3, winAmount: Math.random() * 100, winningCells: [1,1,1,1]},
-                {lineNumber: 3, winAmount: Math.random() * 100, winningCells: [1,1,1]},
-            ],
-
-        rSymbol: function(){
-            //return 2;
-            return Math.ceil(Math.random() * 8);
+        getWins: function(lineSymbols){
+            var wins = [];
+            for(var i = 0; i < this.gameConfigVO.numLines; i++){
+                var oak = 1;
+                for(var j = 1; j < this.gameConfigVO.numReels; j++){
+                    if(lineSymbols[i][j] == lineSymbols[i][j-1]){
+                        oak++;
+                    }else{
+                        break;
+                    }
+                }
+                if(oak >= this.gameConfigVO.minOak) {
+                    var winningSymbol = lineSymbols[i][0];
+                    wins.push(
+                        {
+                            lineNumber: i,
+                            oak: oak,
+                            symbol: winningSymbol,
+                            winAmount: this.gameConfigVO.paytable[winningSymbol][oak] * this.betAmount
+                        }
+                    );
+                }
+            }
+            return wins;
         }
 
     },

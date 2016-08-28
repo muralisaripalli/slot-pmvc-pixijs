@@ -13,6 +13,7 @@ puremvc.define(
 
     // STATIC MEMBERS
     {
+        CLICK:              ('ontouchstart' in window) ? "tap" : "click",
         SPIN_CLICK:         "ViewEvents_spin_click",
         REEL_SPIN_END:      "ViewEvents_reel_spin_end"
     }

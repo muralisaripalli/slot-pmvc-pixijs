@@ -32,7 +32,7 @@ puremvc.define(
                 [[30,30],[365,365],[700,30]],
                 [[30,420],[365,85],[700,420]],
             ],
-        winAnnounceDelay: 2,
+        winAnnounceDelay: 1.5,
         repeatWins: 2,
         responsiveScale:
         {
@@ -43,6 +43,12 @@ puremvc.define(
                 w: 0.25,
                 h: 0.10
             },
+            txtWin:
+            {
+                x: 0.5,
+                y: 0.7,
+                font: 0.4
+            },
             bet:
             {
                 x: 0.045,
@@ -50,12 +56,24 @@ puremvc.define(
                 w: 0.25,
                 h: 0.10
             },
+            txtBet:
+            {
+                x: 0.5,
+                y: 0.7,
+                font: 0.4
+            },
             balance:
             {
                 x: 0.375,
                 y: 0.89,
                 w: 0.25,
                 h: 0.10
+            },
+            txtBalance:
+            {
+                x: 0.5,
+                y: 0.7,
+                font: 0.4
             },
             spin:
             {
