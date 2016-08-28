@@ -1,0 +1,72 @@
+{
+  "name": "slot-pmvc-pixijs",
+  "version": "1.0.0",
+  "description": "Slot Game Demo in HTML5 and JavaScript using PureMVC and Pixi.js",
+  "main": "src/App.js",
+  "scripts": {
+    "test": "test"
+  },
+  "author": "Murali Saripalli",
+  "license": "ISC",
+  "devDependencies": {
+    "gulp": "^3.9.1",
+    "gulp-concat": "^2.6.0",
+    "gulp-header": "^1.8.8",
+    "gulp-jshint": "^2.0.1",
+    "gulp-order": "^1.1.1",
+    "gulp-sourcemaps": "^1.6.0",
+    "gulp-uglify": "^2.0.0",
+    "gulp-util": "^3.0.7",
+    "jshint": "^2.9.3",
+    "jshint-stylish": "^2.2.1",
+    "pixi.js": "^4.0.0",
+    "puremvc": "^1.0.3",
+    "streamqueue": "^1.1.1"
+  },
+  "dependencies": {},
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/muralisaripalli/slot-pmvc-pixijs.git"
+  },
+  "keywords": [
+    "Slot",
+    "Game",
+    "PureMVC",
+    "PixiJS",
+    "HTML5",
+    "JavaScript"
+  ],
+  "bugs": {
+    "url": "https://github.com/muralisaripalli/slot-pmvc-pixijs/issues"
+  },
+  "homepage": "https://github.com/muralisaripalli/slot-pmvc-pixijs#readme",
+  "jshintConfig": {
+    "curly": true,
+    "eqeqeq": true,
+    "forin": true,
+    "freeze": true,
+    "futurehostile": true,
+    "latedef": "nofunc",
+    "maxcomplexity": 20,
+    "maxdepth": 3,
+    "maxparams": 4,
+    "nocomma": true,
+    "nonew": true,
+    "notypeof": true,
+    "strict": "implied",
+    "undef": false,
+    "unused": false,
+    "browser": true,
+    "devel": true,
+    "globals": {
+      "puremvc": true,
+      "slot": true,
+      "PXRoot": true,
+      "PXRenderer": true,
+      "PIXI": true,
+      "Power1": true,
+      "TweenLite": true,
+      "Linear": true
+    }
+  }
+}

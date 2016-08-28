@@ -1,0 +1,66 @@
+/**
+ * Slot game demo - Pure MVC, Pixi.js v4
+ * @author      Murali Saripalli
+ * @desc
+ * @class       BG
+ */
+puremvc.define(
+    {
+        name: 'slot.view.component.BG',
+        constructor: function () {
+            this.stage = new PIXI.Container();
+        }
+    },
+
+    // INSTANCE MEMBERS
+    {
+        // Stage Members
+        stage: null,
+        bg: null,
+
+        // References
+        ORIENTATION: slot.model.enum.ORIENTATION,
+
+        init: function(data){
+            this.addChildren(data.resources);
+            this.setupView(data.windowSizeVO);
+
+            PXRoot.addChild(this.stage);
+        },
+
+        addChildren: function(resources){
+            this.bg = new PIXI.Sprite(resources.bg.texture);
+            this.bg.anchor.set(0.5,0.5);
+            this.stage.addChild(this.bg);
+        },
+
+        setupView: function(windowSizeVO){
+            // Fill screen
+            var bgSize = slot.model.lib.Utils.getSizeToFillScreen(
+                {
+                    width:this.bg.width,
+                    height: this.bg.height
+                },
+                {
+                    width:windowSizeVO.width,
+                    height: windowSizeVO.height
+                }
+            );
+
+            this.bg.width = bgSize.width;
+            this.bg.height = bgSize.height;
+
+            this.bg.x = windowSizeVO.width/2;
+            this.bg.y = windowSizeVO.height/2;
+        },
+
+        handleResize: function(windowSizeVO){
+            this.setupView(windowSizeVO);
+        }
+    },
+
+    // STATIC MEMBERS
+    {
+        NAME: 'BG'
+    }
+);

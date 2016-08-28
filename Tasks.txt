@@ -1,0 +1,39 @@
+
+Tasks
+=====
+- Mouse touch and click events
+- Responsive resizing
+
+- Loader proxy
+- Preloader
+- Sounds
+
+- Game functionality
+- Spin
+
+- Rollovers for buttons
+- Info area, line win amounts in info area
+- Load from spritesheets
+- Highlight symbols during win line announcements
+
+- Image URL should come from config
+- Load game config from config file
+
+- Unit testing framework integration
+- Position of text field is set by hardcoded position values, think about it
+
+Panel button colors
+- Display numbers with decimals
+
+
+- Function to generate text field
+
+- Insufficient balance
+- Total bet/bet per line
+
+- LoaderVO for LoaaderProxy
+- Include all minified files
+
+- Speed of spin from variable
+
+**- Draw everything on screen
