@@ -12,44 +12,79 @@ puremvc.define(
 
     // INSTANCE MEMBERS
     {
+        loader: null,
+        sound: null,
+
+        graphicsLoaded: null,
+        soundsLoaded: null,
+
         onRegister: function(){
         },
 
         loadAssets: function() {
-            var loader = new PIXI.loaders.Loader("",3);
-            loader.add('bg', 'assets/background.jpg');
+            this.loader = new PIXI.loaders.Loader("",3);
+            this.loader.add('bg', 'assets/background.jpg');
 
-            loader.add('s1', 'assets/snowflake.png');
-            loader.add('s2', 'assets/sun.png');
-            loader.add('s3', 'assets/sandglass.png');
-            loader.add('s4', 'assets/victory.png');
-            loader.add('s5', 'assets/a.png');
-            loader.add('s6', 'assets/k.png');
-            loader.add('s7', 'assets/q.png');
-            loader.add('s8', 'assets/j.png');
+            this.loader.add('s1', 'assets/snowflake.png');
+            this.loader.add('s2', 'assets/sun.png');
+            this.loader.add('s3', 'assets/sandglass.png');
+            this.loader.add('s4', 'assets/victory.png');
+            this.loader.add('s5', 'assets/a.png');
+            this.loader.add('s6', 'assets/k.png');
+            this.loader.add('s7', 'assets/q.png');
+            this.loader.add('s8', 'assets/j.png');
 
-            loader.add('spin', 'assets/spin.png');
-            loader.add('spin_disabled', 'assets/spin_disabled.png');
+            this.loader.add('spin', 'assets/spin.png');
+            this.loader.add('spin_disabled', 'assets/spin_disabled.png');
 
-            loader.add('win', 'assets/win.png');
-            loader.add('balance', 'assets/balance.png');
+            this.loader.add('win', 'assets/win.png');
+            this.loader.add('balance', 'assets/balance.png');
 
-            loader.add('bet', 'assets/bet.png');
-            loader.add('bet_minus', 'assets/bet_minus.png');
-            loader.add('bet_minus_disabled', 'assets/bet_minus_disabled.png');
-            loader.add('bet_plus', 'assets/bet_plus.png');
-            loader.add('bet_plus_disabled', 'assets/bet_plus_disabled.png');
+            this.loader.add('bet', 'assets/bet.png');
+            this.loader.add('bet_minus', 'assets/bet_minus.png');
+            this.loader.add('bet_minus_disabled', 'assets/bet_minus_disabled.png');
+            this.loader.add('bet_plus', 'assets/bet_plus.png');
+            this.loader.add('bet_plus_disabled', 'assets/bet_plus_disabled.png');
 
-            loader.on("progress", this.onLoadProgress.bind(this));
-            loader.load(this.onLoadComplete.bind(this));
+            this.loader.on("progress", this.onGraphicsLoadProgress.bind(this));
+            this.loader.load(this.onGraphicsLoadComplete.bind(this));
+
+            this.sound = new Howl({
+                src: ["assets/sounds.mp3"],
+                sprite: {
+                    bet: [0, 370],
+                    spin: [370, 220],
+                    win_s1: [3940, 1200],
+                    win_s2: [590, 1400],
+                    win_s3: [5980, 1060],
+                    win_s4: [2110, 1630],
+                    win_royal: [7040, 720]
+                }
+            });
+
+            this.sound.on("load", this.onSoundsLoadComplete.bind(this))
         },
 
-        onLoadComplete: function(loader, resources){
-            this.setData(resources);
-            this.sendNotification(slot.AppConstants.ASSETS_LOADED, resources);
+        onSoundsLoadComplete: function(){
+            this.soundsLoaded = true;
+            this.sendAssetsLoadedNote();
         },
 
-        onLoadProgress: function(loader, file){
+        onGraphicsLoadComplete: function(){
+            this.graphicsLoaded = true;
+            this.sendAssetsLoadedNote();
+        },
+
+        sendAssetsLoadedNote: function(){
+            if(this.graphicsLoaded && this.soundsLoaded) {
+                this.sendNotification(
+                    slot.AppConstants.ASSETS_LOADED,
+                    {resources: this.loader.resources, sound: this.sound}
+                );
+            }
+        },
+
+        onGraphicsLoadProgress: function(loader, file){
         }
     },
 

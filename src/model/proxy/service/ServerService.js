@@ -39,7 +39,8 @@ puremvc.define(
                     reelMatrix[i][j] = this.getSymbolAt(reels[i], reelStopPos + j);
                 }
             }
-            var lineSymbols = this.getLineStrings(reelMatrix);
+            reelMatrix = this.forceResult(reelMatrix);
+            var lineSymbols = this.getLineSymbols(reelMatrix);
 
             var wins = this.getWins(lineSymbols);
 
@@ -62,7 +63,7 @@ puremvc.define(
             }
         },
 
-        getLineStrings: function(matrix){
+        getLineSymbols: function(matrix){
             var lines = this.gameConfigVO.lines;
             var lineSymbols = [];
             for(var i = 0; i < this.gameConfigVO.numLines; i++){
@@ -98,6 +99,14 @@ puremvc.define(
                 }
             }
             return wins;
+        },
+
+        forceResult: function(matrix){
+            //return matrix;
+            matrix = [[1,2,3],[1,2,3],[1,2,3],[1,2,3],[1,2,3]];
+            matrix = [[4,5,6],[4,5,6],[4,5,6],[4,5,6],[4,5,6]];
+            matrix = [[7,8,1],[7,8,2],[7,8,3],[7,8,4],[7,8,5]];
+            return matrix;
         }
 
     },

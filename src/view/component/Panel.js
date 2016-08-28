@@ -232,10 +232,12 @@ puremvc.define(
 
         onBetMinusClick: function(evt){
             this.decreaseBet();
+            this.stage.emit(slot.view.event.ViewEvents.BET_CLICK);
         },
 
         onBetPlusClick: function(evt){
             this.increaseBet();
+            this.stage.emit(slot.view.event.ViewEvents.BET_CLICK);
         },
 
         handleResize: function (windowSizeVO) {

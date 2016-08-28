@@ -58,7 +58,7 @@ puremvc.define(
                     break;
                 case slot.AppConstants.ASSETS_LOADED:
                     var data = {
-                        resources: note.getBody(),
+                        resources: note.getBody().resources,
                         gameConfigVO: this.configProxy.gameConfigVO,
                         uiConfigVO: this.configProxy.uiConfigVO,
                         windowSizeVO: this.windowSizeProxy.windowSizeVO
@@ -75,7 +75,7 @@ puremvc.define(
                     this.viewComponent.stopAndUpdateSymbols(note.getBody().getSymbolMatrix());
                     break;
                 case slot.AppConstants.WIN_ANNOUNCEMENT:
-                    this.winLinesView.showLine(note.getBody().lineNumber);
+                    this.winLinesView.showLine(note.getBody().win.lineNumber);
                     break;
                 case slot.AppConstants.CLEAR_WIN_ANNOUNCEMENT:
                     this.winLinesView.hideAllLines();

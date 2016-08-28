@@ -32,6 +32,10 @@ puremvc.define(
                 slot.view.event.ViewEvents.SPIN_CLICK,
                 this.onSpinClick.bind(this)
             );
+            this.viewComponent.stage.on(
+                slot.view.event.ViewEvents.BET_CLICK,
+                this.onBetUpdate.bind(this)
+            )
 
             this.windowSizeProxy = this.facade.retrieveProxy(slot.model.proxy.WindowSizeProxy.NAME);
             this.configProxy = this.facade.retrieveProxy(slot.model.proxy.ConfigProxy.NAME);
@@ -40,6 +44,10 @@ puremvc.define(
 
         onSpinClick: function(){
             this.sendNotification(slot.AppConstants.SPIN);
+        },
+
+        onBetUpdate: function(){
+            this.sendNotification(slot.AppConstants.BET_UPDATED);
         },
 
         // Handle notifications from other PureMVC actors
@@ -51,7 +59,7 @@ puremvc.define(
                 case slot.AppConstants.ASSETS_LOADED:
                     this.viewComponent.init(
                         {
-                            resources: note.getBody(),
+                            resources: note.getBody().resources,
                             gameConfigVO: this.configProxy.gameConfigVO,
                             uiConfigVO: this.configProxy.uiConfigVO,
                             windowSizeVO: this.windowSizeProxy.windowSizeVO

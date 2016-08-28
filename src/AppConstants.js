@@ -29,6 +29,8 @@ puremvc.define(
         START_WIN_ANNOUNCEMENTS:    "AppConstants_start_win_announcements",
         STOP_WIN_ANNOUNCEMENTS:     "AppConstants_stop_win_announcements",
         WIN_ANNOUNCEMENT:           "AppConstants_win_announcement",
-        CLEAR_WIN_ANNOUNCEMENT:     "AppConstants_clear_win_announcement"
+        CLEAR_WIN_ANNOUNCEMENT:     "AppConstants_clear_win_announcement",
+
+        BET_UPDATED:                "AppConstants_bet_updated"
     }
 );

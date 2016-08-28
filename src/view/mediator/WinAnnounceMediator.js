@@ -16,7 +16,7 @@ puremvc.define(
         serverProxy: null,
         configProxy: null,
 
-        currentWin: null,
+        currentWinIndex: null,
         isAnnouncing: null,
         winAnnounceDelay: null,
         repeatCount: null,
@@ -41,12 +41,15 @@ puremvc.define(
             }else if(this.isAnnouncing){
                 this.sendNotification(
                     slot.AppConstants.WIN_ANNOUNCEMENT,
-                    this.serverProxy.resultVO.wins[this.currentWin]
+                    {
+                        win: this.serverProxy.resultVO.wins[this.currentWinIndex],
+                        isRepeating: this.repeatCount > 0
+                    }
                 );
-                if(this.currentWin < this.serverProxy.resultVO.wins.length - 1){
-                    this.currentWin++;
+                if(this.currentWinIndex < this.serverProxy.resultVO.wins.length - 1){
+                    this.currentWinIndex++;
                 }else{
-                    this.currentWin = 0;
+                    this.currentWinIndex = 0;
                     this.repeatCount++;
                 }
 
@@ -69,7 +72,7 @@ puremvc.define(
                 case slot.AppConstants.START_WIN_ANNOUNCEMENTS:
                     if(this.serverProxy.resultVO.wins.length > 0){
                         clearInterval(this.intervalID);
-                        this.currentWin = 0;
+                        this.currentWinIndex = 0;
                         this.isAnnouncing = true;
                         this.repeatCount = 0;
                         this.announceWin();

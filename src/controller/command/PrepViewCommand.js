@@ -17,6 +17,7 @@ puremvc.define (
             this.facade.registerMediator(new slot.view.mediator.ReelContainerMediator());
             this.facade.registerMediator(new slot.view.mediator.PanelMediator());
             this.facade.registerMediator(new slot.view.mediator.WinAnnounceMediator());
+            this.facade.registerMediator(new slot.view.mediator.SoundPlayerMediator());
         }
     }
 );

@@ -22,11 +22,11 @@ puremvc.define(
                 [8,4,1,3,2,6,7,2,3,4,1,5,6,7,8,2,5,4,3,1,2,7,6,7,1,4,3,2,4],
                 [1,7,4,2,3,8,4,3,2,5,6,7,2,3,4,5,8,1,2,6,2,4,2,6,3,7,8,4,6,2,3,1,2,5,6,3,4],
                 [8,5,1]
-                //[1,1,1,1,2,2,2,2],
-                //[1,1,1,1,2,2,2,2],
-                //[1,1,1,1,2,2,2,2],
-                //[1,1,1,1,2,2,2,2],
-                //[1,1,1,1,2,2,2,2]
+                //[4,4],
+                //[4,4],
+                //[4,4],
+                //[1,2,4,4],
+                //[1,2,4,4]
             ],
         paytable:
         {
@@ -93,6 +93,8 @@ puremvc.define(
                 [2, 1, 0, 1, 2]
             ],
         minOak: 3,
+        hpSymbols: [1,2,3,4],
+        royals: [5,6,7,8],
 
         // Returns array with all possible symbols
         getSymbols: function(){
@@ -101,7 +103,12 @@ puremvc.define(
                 symbols.push("s" + i);
             }
             return symbols;
+        },
+
+        isRoyalSymbol: function(symbolID){
+            return this.royals.indexOf(symbolID) != -1;
         }
+
     },
 
     // STATIC MEMBERS
