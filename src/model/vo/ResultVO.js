@@ -25,7 +25,7 @@ puremvc.define(
         wins: null,
 
         update: function(result){
-            console.log("Result: ")
+            console.log("Result: ");
             console.log(result);
             this.matrix = result.matrix;
             this.balance = result.balance;

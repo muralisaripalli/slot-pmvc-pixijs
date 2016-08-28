@@ -16,7 +16,6 @@ puremvc.define(
             PXRoot = new PIXI.Container();
 
             PXRenderer = new PIXI.autoDetectRenderer(window.innerWidth, window.innerHeight);
-            PXRenderer.backgroundColor = 0x66FF99;
             PXRenderer.view.style.display = "block";
 
             document.body.appendChild(PXRenderer.view);

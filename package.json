@@ -50,7 +50,7 @@
     "maxcomplexity": 20,
     "maxdepth": 3,
     "maxparams": 4,
-    "nocomma": true,
+    "nocomma": false,
     "nonew": true,
     "notypeof": true,
     "strict": "implied",

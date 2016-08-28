@@ -36,7 +36,7 @@ puremvc.define(
         },
 
         announceWin: function(){
-            if(this.repeatCount >= this.configProxy.uiConfigVO.repeatWinAnnounces) {
+            if(this.repeatCount >= this.configProxy.uiConfigVO.repeatWins) {
                 this.stopAnnouncementInterval();
             }else if(this.isAnnouncing){
                 this.sendNotification(
@@ -58,7 +58,7 @@ puremvc.define(
         },
 
         stopAnnouncementInterval: function(){
-            clearInterval(this.intervalID)
+            clearInterval(this.intervalID);
             this.isAnnouncing = false;
             this.sendNotification(slot.AppConstants.CLEAR_WIN_ANNOUNCEMENT);
         },
@@ -68,13 +68,13 @@ puremvc.define(
             switch ( note.getName() ) {
                 case slot.AppConstants.START_WIN_ANNOUNCEMENTS:
                     if(this.serverProxy.resultVO.wins.length > 0){
-                        clearInterval(this.intervalID)
+                        clearInterval(this.intervalID);
                         this.currentWin = 0;
                         this.isAnnouncing = true;
                         this.repeatCount = 0;
                         this.announceWin();
-                        break;
                     }
+                    break;
                 case slot.AppConstants.STOP_WIN_ANNOUNCEMENTS:
                     this.stopAnnouncementInterval();
                     break;

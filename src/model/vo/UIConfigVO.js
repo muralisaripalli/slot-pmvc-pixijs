@@ -33,7 +33,51 @@ puremvc.define(
                 [[30,420],[365,85],[700,420]],
             ],
         winAnnounceDelay: 2,
-        repeatWinAnnounces: 2
+        repeatWins: 2,
+        responsiveScale:
+        {
+            win:
+            {
+                x: 0.375,
+                y: 0.01,
+                w: 0.25,
+                h: 0.10
+            },
+            bet:
+            {
+                x: 0.045,
+                y: 0.89,
+                w: 0.25,
+                h: 0.10
+            },
+            balance:
+            {
+                x: 0.375,
+                y: 0.89,
+                w: 0.25,
+                h: 0.10
+            },
+            spin:
+            {
+                x: 0.705,
+                y: 0.89,
+                w: 0.25,
+                h: 0.10
+            },
+            reelArea:
+            {
+                x: 0.045,
+                y: 0.125,
+                w: 0.91,
+                h: 0.75
+            }
+        },
+
+        reelAreaBGColor: 0xFFFFFF,
+        reelBGColor: 0x2B6F1A,
+
+        winLineWidth: 5,
+        winLineColor: 0xA81C1D
     },
 
     // STATIC MEMBERS

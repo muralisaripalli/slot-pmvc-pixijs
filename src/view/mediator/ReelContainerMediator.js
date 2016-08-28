@@ -62,7 +62,7 @@ puremvc.define(
                         gameConfigVO: this.configProxy.gameConfigVO,
                         uiConfigVO: this.configProxy.uiConfigVO,
                         windowSizeVO: this.windowSizeProxy.windowSizeVO
-                    }
+                    };
                     this.viewComponent.init(data);
                     this.viewComponent.updateSymbolsWithoutSpin(this.serverProxy.resultVO.getSymbolMatrix());
                     this.winLinesView.init(data);

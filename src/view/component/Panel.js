@@ -35,8 +35,12 @@ puremvc.define(
         denominations: null,
         currentDenomination: null,
 
+        respScale: null,
+
         init: function (data) {
             this.currency = data.uiConfigVO.currency;
+            this.respScale = data.uiConfigVO.responsiveScale;
+
             this.denominations = data.gameConfigVO.denominations;
             this.currentDenomination = data.gameConfigVO.defaultDenomination;
 
@@ -114,17 +118,25 @@ puremvc.define(
         },
 
         setupView: function(windowSizeVO){
-            this.spin.x = windowSizeVO.width - this.spin.width;
-            this.spin.y = windowSizeVO.height - this.spin.height;
-
-            this.win.x = (windowSizeVO.width - this.win.width)/2;
-            this.win.y = 0;
-
-            this.balance.x = (windowSizeVO.width - this.balance.width)/2;
-            this.balance.y = windowSizeVO.height - this.balance.height;
-
-            this.bet.x = 0;
-            this.bet.y = windowSizeVO.height - this.bet.height;
+            // Scaling and positioning as per responsive scale
+            var components = ["spin","win","balance","bet"];
+            var len = components.length;
+            var fitContentOnScreen = new slot.model.lib.Utils().fitContentOnScreen;
+            for(var i = 0; i < len; i++) {
+                var comp = components[i];
+                var scale = this.respScale[comp];
+                fitContentOnScreen(
+                    {
+                        content: this[comp],
+                        screen: {
+                            x: windowSizeVO.width * scale.x,
+                            y: windowSizeVO.height * scale.y,
+                            width: windowSizeVO.width * scale.w,
+                            height: windowSizeVO.height * scale.h
+                        }
+                    }
+                );
+            }
         },
 
         updateBalance: function(balance){
@@ -156,13 +168,13 @@ puremvc.define(
         },
 
         validateBetButtons: function(){
-            if(this.currentDenomination == this.denominations.length - 1){
+            if(this.currentDenomination === this.denominations.length - 1){
                 this.disableBetPlus();
             }else{
                 this.enableBetPlus();
             }
 
-            if(this.currentDenomination == 0){
+            if(this.currentDenomination === 0){
                 this.disableBetMinus();
             }else{
                 this.enableBetMinus();

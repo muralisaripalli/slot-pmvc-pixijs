@@ -18,9 +18,11 @@ puremvc.define(
         stage: null,
         lines: null,
 
+        numLines: null,
         visibleLine: null,
 
         init: function (data) {
+            this.numLines = data.gameConfigVO.numLines;
             this.addLines(data);
             this.hideAllLines();
         },
@@ -29,12 +31,13 @@ puremvc.define(
             this.lines = [];
 
             var linePoints = data.uiConfigVO.linePoints;
-            for(var i = 0; i < linePoints.length; i++){
+            for(var i = 0; i < this.numLines; i++){
                 var line = linePoints[i];
+                var totalPoints = line.length;
                 var lineGraphic = new PIXI.Graphics();
-                lineGraphic.lineStyle(5, 0xA81C1D);
+                lineGraphic.lineStyle(data.uiConfigVO.winLineWidth, data.uiConfigVO.winLineColor);
                 lineGraphic.moveTo(line[0][0], line[0][1]);
-                for(var j = 1; j < line.length; j++){
+                for(var j = 1; j < totalPoints; j++){
                     lineGraphic.lineTo(line[j][0], line[j][1]);
                 }
                 lineGraphic.endFill();
@@ -52,7 +55,7 @@ puremvc.define(
         },
 
         hideAllLines: function(){
-            for(var i = 0; i < this.lines.length; i++){
+            for(var i = 0; i < this.numLines; i++){
                 this.lines[i].visible = false;
             }
         },

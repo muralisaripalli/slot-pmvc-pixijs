@@ -32,12 +32,16 @@ puremvc.define(
         resultMatrixReceived: null,
         resultMatrix: null,
 
+        respScale: null,
+
         init: function (data) {
             this.numReels = data.gameConfigVO.numReels;
             this.numRows = data.gameConfigVO.numRows;
 
             this.minSpinDuration = data.uiConfigVO.minSpinDuration;
             this.reelSpinDelay = data.uiConfigVO.reelSpinDelay;
+            this.respScale = data.uiConfigVO.responsiveScale.reelArea;
+
 
             // Calculating size of whole reel area using values provided in config
             this.width =
@@ -51,14 +55,13 @@ puremvc.define(
 
             // White rounded rectangle behind the whole reel area
             this.bgRect = new PIXI.Graphics();
-            this.bgRect.beginFill(0xFFFFFF);
+            this.bgRect.beginFill(data.uiConfigVO.reelAreaBGColor);
             this.bgRect.drawRoundedRect(0, 0, this.width, this.height, 15);
             this.bgRect.alpha = 0.6;
             this.stage.addChild(this.bgRect);
 
             this.createReels(data);
-
-            this.stage.y += 50;
+            this.setupView(data.windowSizeVO);
 
             PXRoot.addChild(this.stage);
         },
@@ -83,10 +86,31 @@ puremvc.define(
             }
         },
 
+        setupView: function(windowSizeVO){
+            // Scaling and positioning as per responsive scale
+            var substitute = {width: this.width, height: this.height};
+            var fitContentOnScreen = new slot.model.lib.Utils().fitContentOnScreen;
+            fitContentOnScreen(
+                {
+                    content: substitute,
+                    screen: {
+                        x: windowSizeVO.width * this.respScale.x,
+                        y: windowSizeVO.height * this.respScale.y,
+                        width: windowSizeVO.width * this.respScale.w,
+                        height: windowSizeVO.height * this.respScale.h
+                    }
+                }
+            );
+            this.stage.x = substitute.x;
+            this.stage.y = substitute.y;
+            this.stage.scale.x = substitute.width/this.width;
+            this.stage.scale.y = substitute.height/this.height;
+        },
+
         createMaskObject: function(x, y, w, h){
             // Rounded rectangle on top of each reel for mask
             var mask = new PIXI.Graphics();
-            mask.beginFill(0x2B6F1A);
+            mask.beginFill(0xFFFFFF);
             mask.drawRoundedRect(x, y, w, h, 10);
             this.stage.addChild(mask);
             return mask;
@@ -160,7 +184,7 @@ puremvc.define(
         },
 
         handleResize: function (windowSizeVO) {
-
+            this.setupView(windowSizeVO);
         }
     },
 

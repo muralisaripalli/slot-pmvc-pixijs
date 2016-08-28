@@ -36,7 +36,7 @@ puremvc.define(
 
         setupView: function(windowSizeVO){
             // Fill screen
-            var bgSize = slot.model.lib.Utils.getSizeToFillScreen(
+            var size = slot.model.lib.Utils.getSizeToFillScreen(
                 {
                     width:this.bg.width,
                     height: this.bg.height
@@ -47,8 +47,8 @@ puremvc.define(
                 }
             );
 
-            this.bg.width = bgSize.width;
-            this.bg.height = bgSize.height;
+            this.bg.width = size.width;
+            this.bg.height = size.height;
 
             this.bg.x = windowSizeVO.width/2;
             this.bg.y = windowSizeVO.height/2;

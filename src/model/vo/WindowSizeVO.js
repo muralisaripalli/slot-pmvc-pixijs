@@ -14,9 +14,9 @@ puremvc.define(
 
     // INSTANCE MEMBERS
     {
-        width: 0,
-        height: 0,
-        orientation: "",
+        width: null,
+        height: null,
+        orientation: null,
 
         update: function(w, h){
             this.width = w;

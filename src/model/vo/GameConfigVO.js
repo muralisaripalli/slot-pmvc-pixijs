@@ -14,6 +14,7 @@ puremvc.define(
         numReels: 5,
         numRows: 3,
         numSymbols: 8,
+        numLines: 5,
         reels:
             [
                 [1,5,2,1,6,5,8,5,1,2,3,7,4,5,8,1,4,3,2,5,6],

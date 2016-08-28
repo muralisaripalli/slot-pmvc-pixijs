@@ -10,7 +10,25 @@ puremvc.define(
     },
 
     // INSTANCE MEMBERS
-    {},
+    {
+        fitContentOnScreen: function(o){
+            var content = o.content;
+            var contentDimensions = o.contentDimensions || o.content;
+
+            var size = slot.model.lib.Utils.getSizeToFitScreen(
+                contentDimensions,
+                {
+                    width: o.screen.width,
+                    height: o.screen.height
+                }
+            );
+            content.x = o.screen.x + ((o.screen.width - size.width)/2);
+            content.y = o.screen.y + ((o.screen.height - size.height)/2);
+            content.width = size.width;
+            content.height = size.height;
+        }
+
+    },
 
     // STATIC MEMBERS
     {
@@ -33,6 +51,27 @@ puremvc.define(
                 return  {
                     width: content.width * (screen.height/content.height),
                     height: screen.height
+                };
+            }
+        },
+
+        /**
+         * Fit given content into a given screen withhout disturbing the aspect ratio
+         * of the content.
+         * @param {Object} fitObj - Object with data to apply fit
+         * @param {Object}
+         */
+        getSizeToFitScreen: function(content, screen){
+            if((screen.width/screen.height) > (content.width/content.height)){
+                return  {
+                    width: content.width * (screen.height/content.height),
+                    height: screen.height
+                };
+            }
+            else{
+                return  {
+                    width: screen.width,
+                    height: content.height * (screen.width/content.width)
                 };
             }
         }

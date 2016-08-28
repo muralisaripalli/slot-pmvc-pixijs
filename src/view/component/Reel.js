@@ -44,7 +44,7 @@ puremvc.define(
 
             // Yellow rounded rectangle strip behind each reel
             var bgRect = new PIXI.Graphics();
-            bgRect.beginFill(0x2B6F1A);
+            bgRect.beginFill(data.uiConfigVO.reelBGColor);
             bgRect.drawRoundedRect(0, 0, this.width, this.height, 10);
             bgRect.alpha = 0.4;
             this.stage.addChild(bgRect);
