@@ -24,7 +24,7 @@ puremvc.define(
         listNotificationInterests: function () {
             return [
                 slot.AppConstants.WINDOW_RESIZED,
-                slot.AppConstants.ASSETS_LOADED,
+                slot.AppConstants.ASSET_LOAD_COMPLETE,
                 slot.AppConstants.SPIN,
                 slot.AppConstants.SPIN_RESULT,
                 slot.AppConstants.WIN_ANNOUNCEMENT,
@@ -57,7 +57,7 @@ puremvc.define(
                 case slot.AppConstants.WINDOW_RESIZED:
                     this.viewComponent.handleResize(note.getBody());
                     break;
-                case slot.AppConstants.ASSETS_LOADED:
+                case slot.AppConstants.ASSET_LOAD_COMPLETE:
                     var data = {
                         gameConfigVO: this.configProxy.gameConfigVO,
                         uiConfigVO: this.configProxy.uiConfigVO,

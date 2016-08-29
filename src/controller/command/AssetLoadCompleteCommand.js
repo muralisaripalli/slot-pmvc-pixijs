@@ -2,11 +2,11 @@
  * Slot game demo - Pure MVC, Pixi.js v4
  * @author      Murali Saripalli
  * @desc
- * @class       AssetsLoadedCommand
+ * @class       AssetLoadCompleteCommand
  */
 puremvc.define(
     {
-        name: 'slot.controller.command.AssetsLoadedCommand',
+        name: 'slot.controller.command.AssetLoadCompleteCommand',
         parent: puremvc.SimpleCommand
     },
 

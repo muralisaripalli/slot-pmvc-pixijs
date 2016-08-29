@@ -17,7 +17,6 @@ puremvc.define(
 
         onRegister: function () {
             this.windowSizeVO = new slot.model.vo.WindowSizeVO(window.innerWidth, window.innerHeight);
-            console.log("Orientation: " + this.windowSizeVO.orientation);
 
             if(window.addEventListener) {
                 window.addEventListener('resize', this.onResize.bind(this), true);

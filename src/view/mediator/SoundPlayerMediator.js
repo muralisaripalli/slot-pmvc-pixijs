@@ -19,7 +19,7 @@ puremvc.define(
         // Notifications this mediator is interested in 
         listNotificationInterests: function () {
             return [
-                slot.AppConstants.ASSETS_LOADED,
+                slot.AppConstants.ASSET_LOAD_COMPLETE,
                 slot.AppConstants.BET_UPDATED,
                 slot.AppConstants.SPIN,
                 slot.AppConstants.WIN_ANNOUNCEMENT
@@ -35,7 +35,7 @@ puremvc.define(
         // Handle notifications from other PureMVC actors
         handleNotification: function (note) {
             switch ( note.getName() ) {
-                case slot.AppConstants.ASSETS_LOADED:
+                case slot.AppConstants.ASSET_LOAD_COMPLETE:
                     this.sound = note.getBody();
                     break;
                 case slot.AppConstants.BET_UPDATED:
