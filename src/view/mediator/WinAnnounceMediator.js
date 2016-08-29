@@ -1,7 +1,7 @@
 /**
  * Slot game demo - Pure MVC, Pixi.js v4
  * @author      Murali Saripalli
- * @desc
+ * @desc        Takes care of annnouncing the wins, repetitions
  * @class       WinAnnounceMediator
  */
 puremvc.define(
