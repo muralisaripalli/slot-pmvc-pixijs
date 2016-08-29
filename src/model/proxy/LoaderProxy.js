@@ -29,7 +29,6 @@ puremvc.define(
 
             this.sound = new Howl({
                 src: ["assets/sounds.mp3", "assets/sounds.ogg"],
-                autoplay: true,
                 sprite: {
                     bet: [0, 370],
                     spin: [370, 220],
