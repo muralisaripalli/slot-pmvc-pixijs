@@ -43,6 +43,10 @@ puremvc.define(
             this.callback(this.calculateSpinResult());
         },
 
+        /**
+         * Returns full spin result
+         * @returns {Array}
+         */
         calculateSpinResult: function(){
             var result = [];
             var reels = this.gameConfigVO.reels;
@@ -72,6 +76,12 @@ puremvc.define(
             return result;
         },
 
+        /**
+         * Returns reel symbols circularly if reel stops at the end
+         * @param reel
+         * @param pos
+         * @returns {*}
+         */
         getSymbolAt: function(reel, pos){
             if(pos > reel.length - 1){
                 return reel[pos - reel.length];
@@ -80,6 +90,11 @@ puremvc.define(
             }
         },
 
+        /**
+         * Takes reel output matrix and creates an array with line results
+         * @param matrix
+         * @returns {Array}
+         */
         getLineSymbols: function(matrix){
             var lines = this.gameConfigVO.lines;
             var lineSymbols = [];
@@ -92,6 +107,12 @@ puremvc.define(
             return lineSymbols;
         },
 
+        /**
+         * Takes result of each line and looks for winning combinations
+         * Calculates wins if winning combination exist
+         * @param lineSymbols
+         * @returns {Array}
+         */
         getWins: function(lineSymbols){
             var wins = [];
             for(var i = 0; i < this.gameConfigVO.numLines; i++){
@@ -118,12 +139,13 @@ puremvc.define(
             return wins;
         },
 
+        // Forces result for testig during development
         forceResult: function(matrix){
             return matrix;
-            matrix = [[1,2,3],[1,2,3],[1,2,3],[1,2,3],[1,2,3]];
-            matrix = [[4,5,6],[4,5,6],[4,5,6],[4,5,6],[4,5,6]];
+            //matrix = [[1,2,3],[1,2,3],[1,2,3],[1,2,3],[1,2,3]];
+            //matrix = [[4,5,6],[4,5,6],[4,5,6],[4,5,6],[4,5,6]];
             //matrix = [[7,8,1],[7,8,2],[7,8,3],[7,8,4],[7,8,5]];
-            return matrix;
+            //return matrix;
         }
 
     },

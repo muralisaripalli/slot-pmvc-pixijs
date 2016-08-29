@@ -40,6 +40,13 @@ puremvc.define(
                         slot.model.enum.ORIENTATION.PORTRAIT;
         },
 
+        /**
+         * Provides dimensions of content to fill whole area of the screen
+         * without disturbing the aspect ratio
+         * @param content
+         * @param screen
+         * @returns {object}
+         */
         getSizeToFillScreen: function(content, screen){
             if((screen.width/screen.height) > (content.width/content.height)){
                 return  {
@@ -56,8 +63,8 @@ puremvc.define(
         },
 
         /**
-         * Fit given content into a given screen withhout disturbing the aspect ratio
-         * of the content.
+         * Provides dimensionss of content to fit whole area of the screen
+         * wihtout disturbing the aspect ratio.
          * @param {Object} fitObj - Object with data to apply fit
          * @param {Object}
          */
@@ -73,21 +80,6 @@ puremvc.define(
                     width: screen.width,
                     height: content.height * (screen.width/content.width)
                 };
-            }
-        },
-
-        toggleFullScreen: function() {
-            var doc = window.document;
-            var docEl = doc.documentElement;
-
-            var requestFullScreen = docEl.requestFullscreen || docEl.mozRequestFullScreen || docEl.webkitRequestFullScreen || docEl.msRequestFullscreen;
-            var cancelFullScreen = doc.exitFullscreen || doc.mozCancelFullScreen || doc.webkitExitFullscreen || doc.msExitFullscreen;
-
-            if(!doc.fullscreenElement && !doc.mozFullScreenElement && !doc.webkitFullscreenElement && !doc.msFullscreenElement) {
-                requestFullScreen.call(docEl);
-            }
-            else {
-                cancelFullScreen.call(doc);
             }
         }
     }

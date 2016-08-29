@@ -1,7 +1,7 @@
 /**
  * Slot game demo - Pure MVC, Pixi.js v4
  * @author      Murali Saripalli
- * @desc
+ * @desc        Loads assets and sounds
  * @class       LoaderProxy
  */
 puremvc.define(
@@ -26,10 +26,10 @@ puremvc.define(
             this.loader
                 .add('assets/spritesheet.json')
                 .load(this.onGraphicsLoadComplete.bind(this));
-            this.loader.on("progress", this.onGraphicsLoadProgress.bind(this));
 
             this.sound = new Howl({
-                src: ["assets/sounds.mp3"],
+                src: ["assets/sounds.mp3", "assets/sounds.ogg"],
+                autoplay: true,
                 sprite: {
                     bet: [0, 370],
                     spin: [370, 220],
@@ -62,9 +62,6 @@ puremvc.define(
             }
         },
 
-        onGraphicsLoadProgress: function(loader, file){
-            this.sendNotification(slot.AppConstants.ASSET_LOAD_PROGRESS, loader.progress);
-        }
     },
 
     // STATIC MEMBERS

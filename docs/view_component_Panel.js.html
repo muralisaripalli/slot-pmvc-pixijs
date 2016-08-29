@@ -1,0 +1,307 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Source: view/component/Panel.js</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Source: view/component/Panel.js</h1>
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>/**
+ * Slot game demo - Pure MVC, Pixi.js v4
+ * @author      Murali Saripalli
+ * @desc
+ * @class       Panel
+ */
+puremvc.define(
+    {
+        name: 'slot.view.component.Panel',
+        constructor: function () {
+            this.stage = new PIXI.Container();
+        }
+    },
+
+    // INSTANCE MEMBERS
+    {
+        // Stage Members
+        stage: null,
+
+        spin: null,
+        btnSpin: null,
+
+        win: null,
+        txtWin: null,
+
+        balance: null,
+        txtBalance: null,
+
+        bet: null,
+        btnBetPlus: null,
+        btnBetMinus: null,
+        txtBet: null,
+        betAmount: null,
+
+        currency: null,
+        denominations: null,
+        currentDenomination: null,
+
+        respScale: null,
+
+        init: function (data) {
+            this.currency = data.uiConfigVO.currency;
+            this.respScale = data.uiConfigVO.responsiveScale;
+
+            this.denominations = data.gameConfigVO.denominations;
+            this.currentDenomination = data.gameConfigVO.defaultDenomination;
+
+            this.addChildren();
+            this.setupView(data.windowSizeVO);
+
+            PXRoot.addChild(this.stage);
+        },
+
+        addChildren: function(){
+            // Spin component
+            this.spin = new PIXI.Container();
+            this.spin.addChild(new PIXI.Sprite(PIXI.Texture.fromFrame("spin_disabled")));
+            this.spin.addChild(this.btnSpin = new PIXI.Sprite(PIXI.Texture.fromFrame("spin")));
+            this.stage.addChild(this.spin);
+
+            // Win component ==>
+            this.win = new PIXI.Container();
+            this.win.addChild(new PIXI.Sprite(PIXI.Texture.fromFrame("win")));
+
+            this.txtWin = new PIXI.Text();
+            this.txtWin.style = {fontSize: 30, align: 'center'};
+            this.txtWin.anchor.set(0.5, 0.5);
+            this.txtWin.x = 100;
+            this.txtWin.y = 52;
+
+            this.win.addChild(this.txtWin);
+
+            this.stage.addChild(this.win);
+            // Win component &lt;==
+
+            // Balance component ==>
+            this.balance = new PIXI.Container();
+            this.balance.addChild(new PIXI.Sprite(PIXI.Texture.fromFrame("balance")));
+
+            this.txtBalance = new PIXI.Text();
+            this.txtBalance.style = {fontSize: 30, align: 'center'};
+            this.txtBalance.anchor.set(0.5, 0.5);
+            this.txtBalance.x = 100;
+            this.txtBalance.y = 52;
+            this.balance.addChild(this.txtBalance);
+
+            this.stage.addChild(this.balance);
+            // &lt;== Balance component
+
+            // Bet component ===>
+            this.bet = new PIXI.Container();
+            this.bet.addChild(new PIXI.Sprite(PIXI.Texture.fromFrame("bet_minus_disabled")));
+            this.bet.addChild(this.btnBetMinus = new PIXI.Sprite(PIXI.Texture.fromFrame("bet_minus")));
+            var betSprite = new PIXI.Sprite(PIXI.Texture.fromFrame("bet"));
+            betSprite.x += this.btnBetMinus.width + 2;
+            this.bet.addChild(betSprite);
+            var betPlusDSprite = new PIXI.Sprite(PIXI.Texture.fromFrame("bet_plus_disabled"));
+            betPlusDSprite.x = betSprite.x + betSprite.width + 2;
+            this.bet.addChild(betPlusDSprite);
+            this.bet.addChild(this.btnBetPlus = new PIXI.Sprite(PIXI.Texture.fromFrame("bet_plus")));
+            this.btnBetPlus.x = betPlusDSprite.x;
+
+            this.txtBet = new PIXI.Text();
+            this.txtBet.style = {fontSize: 30, align: 'center'};
+            this.txtBet.anchor.set(0.5, 0.5);
+            this.txtBet.x = betSprite.x + 68;
+            this.txtBet.y = betSprite.y + 52;
+            this.bet.addChild(this.txtBet);
+
+            this.stage.addChild(this.bet);
+            // &lt;=== Bet component
+
+            // Buttons
+            this.btnSpin.interactive = true;
+            this.btnSpin.on(slot.view.event.ViewEvents.CLICK, this.onSpinClick.bind(this));
+            this.btnBetMinus.interactive = true;
+            this.btnBetMinus.on(slot.view.event.ViewEvents.CLICK, this.onBetMinusClick.bind(this));
+            this.btnBetPlus.interactive = true;
+            this.btnBetPlus.on(slot.view.event.ViewEvents.CLICK, this.onBetPlusClick.bind(this));
+            this.disableBet();
+            this.disableSpin();
+
+            // Initial values
+            this.updateBet();
+
+            this.resTxt = new PIXI.Text();
+            this.resTxt.style = {fontSize: 15, align: 'left', wordwrap: true,stroke:0xFFFFFF,strokeThickness:2};
+            PXRoot.addChild(this.resTxt);
+        },
+
+        setupView: function(windowSizeVO){
+            // Scaling and positioning as per responsive scale
+            var components = ["spin","win","balance","bet"];
+            var len = components.length;
+            var fitContentOnScreen = new slot.model.lib.Utils().fitContentOnScreen;
+            for(var i = 0; i &lt; len; i++) {
+                var comp = components[i];
+                var scale = this.respScale[comp];
+                fitContentOnScreen(
+                    {
+                        content: this[comp],
+                        screen: {
+                            x: windowSizeVO.width * scale.x,
+                            y: windowSizeVO.height * scale.y,
+                            width: windowSizeVO.width * scale.w,
+                            height: windowSizeVO.height * scale.h
+                        }
+                    }
+                );
+            }
+            this.resTxt.text = windowSizeVO.width + "x" + windowSizeVO.height +"\n";
+        },
+
+        updateBalance: function(balance){
+            this.txtBalance.text = this.currency + balance.toFixed(2);
+        },
+
+        updateWin: function(win){
+            this.txtWin.text = this.currency + win.toFixed(2);
+        },
+
+        updateBet: function(){
+            this.txtBet.text = this.currency + this.denominations[this.currentDenomination].toFixed(2);
+            this.betAmount = this.denominations[this.currentDenomination];
+        },
+
+        increaseBet: function(){
+            if(this.currentDenomination &lt; this.denominations.length - 1){
+                this.currentDenomination++;
+                this.updateBet();
+                this.validateBetButtons();
+            }
+        },
+
+        decreaseBet: function(){
+            if(this.currentDenomination > 0){
+                this.currentDenomination--;
+                this.updateBet();
+                this.validateBetButtons();
+            }
+        },
+
+        validateBetButtons: function(){
+            if(this.currentDenomination === this.denominations.length - 1){
+                this.disableBetPlus();
+            }else{
+                this.enableBetPlus();
+            }
+
+            if(this.currentDenomination === 0){
+                this.disableBetMinus();
+            }else{
+                this.enableBetMinus();
+            }
+        },
+
+        disableSpin: function(){
+            this.btnSpin.visible = false;
+        },
+
+        enableSpin: function(){
+            this.btnSpin.visible = true;
+        },
+
+        disableBet: function(){
+            this.disableBetPlus();
+            this.disableBetMinus();
+        },
+        enableBet: function(){
+            this.validateBetButtons();
+        },
+
+        disableBetPlus: function(){
+            this.btnBetPlus.visible = false;
+        },
+
+        enableBetPlus: function(){
+            this.btnBetPlus.visible = true;
+        },
+
+        disableBetMinus: function(){
+            this.btnBetMinus.visible = false;
+        },
+
+        enableBetMinus: function(){
+            this.btnBetMinus.visible = true;
+        },
+
+        // Event Handlers
+        onSpinClick: function(evt){
+            this.disableSpin();
+            this.disableBet();
+            this.txtWin.text = "";
+            this.stage.emit(slot.view.event.ViewEvents.SPIN_CLICK, this.betAmount);
+        },
+
+        onBetMinusClick: function(evt){
+            this.decreaseBet();
+            this.stage.emit(slot.view.event.ViewEvents.BET_CLICK);
+        },
+
+        onBetPlusClick: function(evt){
+            this.increaseBet();
+            this.stage.emit(slot.view.event.ViewEvents.BET_CLICK);
+        },
+
+        handleResize: function (windowSizeVO) {
+            this.setupView(windowSizeVO);
+        }
+    },
+
+    // STATIC MEMBERS
+    {
+        NAME: 'Panel'
+    }
+);
+</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="App.html">App</a></li><li><a href="AppConstants.html">AppConstants</a></li><li><a href="BG.html">BG</a></li><li><a href="BGMediator.html">BGMediator</a></li><li><a href="ConfigProxy.html">ConfigProxy</a></li><li><a href="GameConfigVO.html">GameConfigVO</a></li><li><a href="LoaderProxy.html">LoaderProxy</a></li><li><a href="ORIENTATION.html">ORIENTATION</a></li><li><a href="Panel.html">Panel</a></li><li><a href="PanelMediator.html">PanelMediator</a></li><li><a href="Preloader.html">Preloader</a></li><li><a href="PreloaderMediator.html">PreloaderMediator</a></li><li><a href="PrepControllerCommand.html">PrepControllerCommand</a></li><li><a href="PrepModelCommand.html">PrepModelCommand</a></li><li><a href="PrepPixiCommand.html">PrepPixiCommand</a></li><li><a href="PrepViewCommand.html">PrepViewCommand</a></li><li><a href="Reel.html">Reel</a></li><li><a href="ReelCell.html">ReelCell</a></li><li><a href="ReelContainer.html">ReelContainer</a></li><li><a href="ReelContainerMediator.html">ReelContainerMediator</a></li><li><a href="ResultVO.html">ResultVO</a></li><li><a href="ServerProxy.html">ServerProxy</a></li><li><a href="ServerService.html">ServerService</a></li><li><a href="slot.controller.command.AssetLoadCompleteCommand.html">AssetLoadCompleteCommand</a></li><li><a href="SoundPlayerMediator.html">SoundPlayerMediator</a></li><li><a href="SpinCommand.html">SpinCommand</a></li><li><a href="SpinEndCommand.html">SpinEndCommand</a></li><li><a href="StartupCommand.html">StartupCommand</a></li><li><a href="UIConfigVO.html">UIConfigVO</a></li><li><a href="Utils.html">Utils</a></li><li><a href="ViewEvents.html">ViewEvents</a></li><li><a href="WinAnnounceMediator.html">WinAnnounceMediator</a></li><li><a href="WindowResizeCommand.html">WindowResizeCommand</a></li><li><a href="WindowSizeProxy.html">WindowSizeProxy</a></li><li><a href="WindowSizeVO.html">WindowSizeVO</a></li><li><a href="WinLines.html">WinLines</a></li></ul><h3>Global</h3><ul><li><a href="global.html#getOffScreenCells">getOffScreenCells</a></li><li><a href="global.html#getSizeToFitScreen">getSizeToFitScreen</a></li><li><a href="global.html#initializeMacroCommand">initializeMacroCommand</a></li><li><a href="global.html#PXRoot">PXRoot</a></li><li><a href="global.html#setFullScreen">setFullScreen</a></li><li><a href="global.html#updateSymbolsIfReady">updateSymbolsIfReady</a></li></ul>
+</nav>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.4.0</a> on Mon Aug 29 2016 11:39:17 GMT+1000 (AUS Eastern Standard Time)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>

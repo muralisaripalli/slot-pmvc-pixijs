@@ -1,7 +1,7 @@
 /**
  * Slot game demo - Pure MVC, Pixi.js v4
  * @author      Murali Saripalli
- * @desc
+ * @desc        Registers all mediators with the facade
  * @class       PrepViewCommand
  */
 puremvc.define (

@@ -1,8 +1,10 @@
 /**
  * Slot game demo - Pure MVC, Pixi.js v4
  * @author      Murali Saripalli
- * @desc
  * @class       AssetLoadCompleteCommand
+ * @memberof    slot.controller.command
+ * @desc        Command registered to ASSET_LOAD_COMPLETE notification.
+ *              Fired when asset loading is complete. Initializes server.
  */
 puremvc.define(
     {

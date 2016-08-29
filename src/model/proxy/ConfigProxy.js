@@ -1,7 +1,7 @@
 /**
  * Slot game demo - Pure MVC, Pixi.js v4
  * @author      Murali Saripalli
- * @desc
+ * @desc        Collection of all configs
  * @class       ConfigProxy
  */
 puremvc.define(

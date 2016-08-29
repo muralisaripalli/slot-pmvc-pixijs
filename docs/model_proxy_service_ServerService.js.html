@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Source: model/proxy/service/ServerService.js</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Source: model/proxy/service/ServerService.js</h1>
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>/**
+ * Slot game demo - Pure MVC, Pixi.js v4
+ * @author      Murali Saripalli
+ * @desc
+ * @class       ServerService
+ */
+puremvc.define(
+    {
+        name: 'slot.model.proxy.service.ServerService',
+        constructor: function(){
+            this.gameConfigVO = new slot.model.vo.GameConfigVO();
+        }
+    },
+
+    // INSTANCE MEMBERS
+    {
+        callback: null,
+        gameConfigVO: null,
+        betAmount: null,
+        balance: null,
+
+        init: function (callback) {
+            this.betAmount = 0;
+            this.deposit();
+            this.callback = callback;
+            setTimeout(this.sendSpinResult.bind(this), 500);
+        },
+        deposit: function(){
+            this.balance = (Math.random() * 500) + 500;
+        },
+
+        loadSpinResult: function (betAmount, callback) {
+            this.betAmount = betAmount;
+            this.balance -= this.betAmount;
+            if(this.balance &lt; this.gameConfigVO.denominations[this.gameConfigVO.denominations.length - 1]){
+                this.deposit();
+            }
+            this.callback = callback;
+            setTimeout(this.sendSpinResult.bind(this), 1000);
+        },
+
+        sendSpinResult: function(){
+            this.callback(this.calculateSpinResult());
+        },
+
+        calculateSpinResult: function(){
+            var result = [];
+            var reels = this.gameConfigVO.reels;
+            var reelMatrix = [];
+            for (var i=0; i&lt;this.gameConfigVO.numReels; i++) {
+                var reelStopPos = Math.floor(Math.random() * reels[i].length);
+                reelMatrix[i] = [];
+                for(var j = 0; j &lt; this.gameConfigVO.numRows; j++){
+                    reelMatrix[i][j] = this.getSymbolAt(reels[i], reelStopPos + j);
+                }
+            }
+            reelMatrix = this.forceResult(reelMatrix);
+            var lineSymbols = this.getLineSymbols(reelMatrix);
+
+            var wins = this.getWins(lineSymbols);
+
+            result.matrix = reelMatrix;
+            result.numWins = wins.length;
+            result.totalWin = wins.reduce(function(pv, cv){
+                return pv + cv.winAmount;
+            }, 0);
+            result.wins = wins;
+
+            this.balance += result.totalWin;
+            result.balance = this.balance;
+
+            return result;
+        },
+
+        getSymbolAt: function(reel, pos){
+            if(pos > reel.length - 1){
+                return reel[pos - reel.length];
+            }else{
+                return reel[pos];
+            }
+        },
+
+        getLineSymbols: function(matrix){
+            var lines = this.gameConfigVO.lines;
+            var lineSymbols = [];
+            for(var i = 0; i &lt; this.gameConfigVO.numLines; i++){
+                lineSymbols[i] = [];
+                for(var j = 0; j &lt; this.gameConfigVO.numReels; j++){
+                    lineSymbols[i][j] = matrix[j][lines[i][j]];
+                }
+            }
+            return lineSymbols;
+        },
+
+        getWins: function(lineSymbols){
+            var wins = [];
+            for(var i = 0; i &lt; this.gameConfigVO.numLines; i++){
+                var oak = 1;
+                for(var j = 1; j &lt; this.gameConfigVO.numReels; j++){
+                    if(lineSymbols[i][j] == lineSymbols[i][j-1]){
+                        oak++;
+                    }else{
+                        break;
+                    }
+                }
+                if(oak >= this.gameConfigVO.minOak) {
+                    var winningSymbol = lineSymbols[i][0];
+                    wins.push(
+                        {
+                            lineNumber: i,
+                            oak: oak,
+                            symbol: winningSymbol,
+                            winAmount: this.gameConfigVO.paytable[winningSymbol][oak] * this.betAmount
+                        }
+                    );
+                }
+            }
+            return wins;
+        },
+
+        forceResult: function(matrix){
+            return matrix;
+            //matrix = [[1,2,3],[1,2,3],[1,2,3],[1,2,3],[1,2,3]];
+            //matrix = [[4,5,6],[4,5,6],[4,5,6],[4,5,6],[4,5,6]];
+            //matrix = [[7,8,1],[7,8,2],[7,8,3],[7,8,4],[7,8,5]];
+            //return matrix;
+        }
+
+    },
+
+    // STATIC MEMBERS
+    {
+        NAME: "ServerService"
+    }
+);</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="App.html">App</a></li><li><a href="AppConstants.html">AppConstants</a></li><li><a href="BG.html">BG</a></li><li><a href="BGMediator.html">BGMediator</a></li><li><a href="ConfigProxy.html">ConfigProxy</a></li><li><a href="GameConfigVO.html">GameConfigVO</a></li><li><a href="LoaderProxy.html">LoaderProxy</a></li><li><a href="ORIENTATION.html">ORIENTATION</a></li><li><a href="Panel.html">Panel</a></li><li><a href="PanelMediator.html">PanelMediator</a></li><li><a href="Preloader.html">Preloader</a></li><li><a href="PreloaderMediator.html">PreloaderMediator</a></li><li><a href="PrepControllerCommand.html">PrepControllerCommand</a></li><li><a href="PrepModelCommand.html">PrepModelCommand</a></li><li><a href="PrepPixiCommand.html">PrepPixiCommand</a></li><li><a href="PrepViewCommand.html">PrepViewCommand</a></li><li><a href="Reel.html">Reel</a></li><li><a href="ReelCell.html">ReelCell</a></li><li><a href="ReelContainer.html">ReelContainer</a></li><li><a href="ReelContainerMediator.html">ReelContainerMediator</a></li><li><a href="ResultVO.html">ResultVO</a></li><li><a href="ServerProxy.html">ServerProxy</a></li><li><a href="ServerService.html">ServerService</a></li><li><a href="slot.controller.command.AssetLoadCompleteCommand.html">AssetLoadCompleteCommand</a></li><li><a href="SoundPlayerMediator.html">SoundPlayerMediator</a></li><li><a href="SpinCommand.html">SpinCommand</a></li><li><a href="SpinEndCommand.html">SpinEndCommand</a></li><li><a href="StartupCommand.html">StartupCommand</a></li><li><a href="UIConfigVO.html">UIConfigVO</a></li><li><a href="Utils.html">Utils</a></li><li><a href="ViewEvents.html">ViewEvents</a></li><li><a href="WinAnnounceMediator.html">WinAnnounceMediator</a></li><li><a href="WindowResizeCommand.html">WindowResizeCommand</a></li><li><a href="WindowSizeProxy.html">WindowSizeProxy</a></li><li><a href="WindowSizeVO.html">WindowSizeVO</a></li><li><a href="WinLines.html">WinLines</a></li></ul><h3>Global</h3><ul><li><a href="global.html#getOffScreenCells">getOffScreenCells</a></li><li><a href="global.html#getSizeToFitScreen">getSizeToFitScreen</a></li><li><a href="global.html#initializeMacroCommand">initializeMacroCommand</a></li><li><a href="global.html#PXRoot">PXRoot</a></li><li><a href="global.html#setFullScreen">setFullScreen</a></li><li><a href="global.html#updateSymbolsIfReady">updateSymbolsIfReady</a></li></ul>
+</nav>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.4.0</a> on Mon Aug 29 2016 11:39:17 GMT+1000 (AUS Eastern Standard Time)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>

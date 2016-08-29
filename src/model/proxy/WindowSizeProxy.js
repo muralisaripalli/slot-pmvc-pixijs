@@ -1,7 +1,7 @@
 /**
  * Slot game demo - Pure MVC, Pixi.js v4
  * @author      Murali Saripalli
- * @desc
+ * @desc        Listens to browser's resize event and informs app if resized
  * @class       WindowSizeProxy
  */
 puremvc.define(

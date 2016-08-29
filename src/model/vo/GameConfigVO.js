@@ -1,7 +1,7 @@
 /**
  * Slot game demo - Pure MVC, Pixi.js v4
  * @author      Murali Saripalli
- * @desc
+ * @desc        Generic game configuration
  * @class       GameConfigVO
  */
 puremvc.define(

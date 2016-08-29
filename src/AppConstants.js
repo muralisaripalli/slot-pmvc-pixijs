@@ -21,7 +21,6 @@ puremvc.define(
 
         // ===
         ASSET_LOAD_BEGIN:           "AppConstants_asset_load_begin",
-        ASSET_LOAD_PROGRESS:        "AppConstants_asset_load_progress",
         ASSET_LOAD_COMPLETE:        "AppConstants_asset_load_complete",
         WINDOW_RESIZED:             "AppConstants_window_resized",
         SERVER_INIT:                "AppConstants_server_init",

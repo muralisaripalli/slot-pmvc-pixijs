@@ -1,7 +1,10 @@
 /**
  * Slot game demo - Pure MVC, Pixi.js v4
  * @author      Murali Saripalli
- * @desc
+ * @desc        Initializes Pixi
+ *              Creates PXRoot which is used through the App to refer main stage
+ *              Tap event to switch to fullscreen on mobiles
+ *              Contains main render loop.
  * @class       PrepPixiCommand
  */
 puremvc.define(

@@ -1,7 +1,7 @@
 /**
  * Slot game demo - Pure MVC, Pixi.js v4
  * @author      Murali Saripalli
- * @desc
+ * @desc        Resgiters proxys with facade
  * @class       PrepModelCommand
  */
 puremvc.define(
@@ -12,7 +12,6 @@ puremvc.define(
   
     // INSTANCE MEMBERS
     {
-        // Register all Proxys
         execute: function (note) {
             this.facade.registerProxy(new slot.model.proxy.LoaderProxy());
             this.facade.registerProxy(new slot.model.proxy.WindowSizeProxy());

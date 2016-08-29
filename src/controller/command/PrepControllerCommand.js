@@ -1,7 +1,7 @@
 /**
  * Slot game demo - Pure MVC, Pixi.js v4
  * @author      Murali Saripalli
- * @desc
+ * @desc        Registers commands with notifications
  * @class       PrepControllerCommand
  */
 puremvc.define(
@@ -12,8 +12,7 @@ puremvc.define(
   
     // INSTANCE MEMBERS
     {
-        // Register all commands
-        execute: function (note) {   
+        execute: function (note) {
             this.facade.registerCommand(slot.AppConstants.ASSET_LOAD_COMPLETE, slot.controller.command.AssetLoadCompleteCommand);
             this.facade.registerCommand(slot.AppConstants.WINDOW_RESIZED, slot.controller.command.WindowResizeCommand);
             this.facade.registerCommand(slot.AppConstants.SPIN, slot.controller.command.SpinCommand);

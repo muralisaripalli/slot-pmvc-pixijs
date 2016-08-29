@@ -1,7 +1,8 @@
 /**
  * Slot game demo - Pure MVC, Pixi.js v4
  * @author      Murali Saripalli
- * @desc
+ * @desc        Registered to SPIN note
+ *              Calls server spin
  * @class       SpinCommand
  */
 puremvc.define(

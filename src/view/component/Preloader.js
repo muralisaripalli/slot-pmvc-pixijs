@@ -23,7 +23,7 @@ puremvc.define(
             // White rounded rectangle behind the whole reel area
             this.preloader = new PIXI.Graphics();
             this.preloader.beginFill(0xFFFFFF);
-            this.preloader.drawRect(0, 0, windowSizeVO.width * 0.2, windowSizeVO.height * 0.01);
+            this.preloader.drawRect(0, 0, windowSizeVO.width * 0.1, windowSizeVO.height * 0.01);
             this.stage.pivot.set(this.preloader.width/2, this.preloader.height/2);
             this.stage.x = windowSizeVO.width/2;
             this.stage.y = windowSizeVO.height/2;

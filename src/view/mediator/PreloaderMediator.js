@@ -19,7 +19,6 @@ puremvc.define(
         listNotificationInterests: function () {
             return [
                 slot.AppConstants.ASSET_LOAD_BEGIN,
-                slot.AppConstants.ASSET_LOAD_PROGRESS,
                 slot.AppConstants.ASSET_LOAD_COMPLETE
             ];
         },
@@ -34,8 +33,6 @@ puremvc.define(
             switch ( note.getName() ) {
                 case slot.AppConstants.ASSET_LOAD_COMPLETE:
                     this.viewComponent.hide();
-                    break;
-                case slot.AppConstants.ASSET_LOAD_PROGRESS:
                     break;
                 case slot.AppConstants.ASSET_LOAD_BEGIN:
                     this.viewComponent.init(this.windowSizeProxy.windowSizeVO);
